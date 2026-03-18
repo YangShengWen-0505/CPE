@@ -15,7 +15,6 @@ bool move(int x,int y,pair<int,int> p,int l,int w){
 }
 
 int main(){
-
 	long long int l,w,x,y,now;
 	vector<vector<int>> data;
 	vector<pair<int,int>> p;
@@ -42,17 +41,12 @@ int main(){
 		}
 	}
 	
-	
 	while(cin>>x>>y>>temp){
 		cin.ignore();
 		getline(cin,line);
-		
 		now=pos[temp];
-		//cout<<now<<" "<<x<<" "<<y<<" "<<temp<<endl<<endl;
 		for(int t=0;t<line.size();t++){
 			check=false;
-			//cout<<line[t]<<endl;
-			//cout<<p[now].first<<" "<<p[now].second<<endl;
 			switch(line[t]){
 				case 'L':
 					now=(now-1+4)%4;
@@ -70,17 +64,12 @@ int main(){
 							data[abs(l-x)][y]=1;
 							check=true;
 						}
-						
-	
 					}
 					break;
 			}
-
-			
 			if(check==true)
 					break;
 		}
-		
 		if(check==true){
 			cout<<x<<" "<<y<<" "<<temp<<" LOST"<<endl;
 		}
@@ -91,7 +80,6 @@ int main(){
 					break;
 				}
 			}
-		
 			cout<<x<<" "<<y<<" "<<temp<<endl;
 		}
 	}
