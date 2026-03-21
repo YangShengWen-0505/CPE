@@ -1,68 +1,65 @@
 #include <iostream>
+#include <vector>
+#include <string>
 
 using namespace std;
 
 int main(){
 
-	int n,m,t2[100][100],count=0;
-	char t1[100][100];
+	int m, n,map[101][101],k=0;
+	string data;
+	vector<pair<int,int>> count{
+		{-1,-1},
+		{-1,0},
+		{-1,1},
+		{0,-1},
+		{0,1},
+		{1,-1},
+		{1,0},
+		{1,1}
+	};
 
-	while(cin>>n>>m){
-		if(n==0 && m==0){
-			return 0;
-		}
-		if(count!=0){
+	while(true){
+	    cin>>m>>n;
+		if(m==0&&n==0)
+			break;
+		k++;
+		if(k!=1)
 			cout<<endl;
-		}
-		for(int i=0;i<n;i++){
-			for(int j=0;j<m;j++){
-				cin>>t1[i][j];
-				t2[i][j]=0;
+		cout<<"Field #"<<k<<":"<<endl;
+		
+		for(int i=0;i<m;i++){
+			for(int j=0;j<n;j++){
+				map[i][j]=0;
 			}
 		}
-		for(int i=0;i<n;i++){
-			for(int j=0;j<m;j++){
-				if(t1[i][j]=='*'){
-					if(i-1>=0 && j-1>=0){
-						t2[i-1][j-1]++;
-					}
-					if(i-1>=0){
-						t2[i-1][j]++;
-					}
-					if(i-1>=0 && j+1<m){
-						t2[i-1][j+1]++;
-					}
-					if(j-1>=0){
-						t2[i][j-1]++;
-					}
-					if(j+1<m){
-						t2[i][j+1]++;
-					}
-					if(i+1<n && j-1>=0){
-						t2[i+1][j-1]++;
-					}
-					if(i+1<n){
-						t2[i+1][j]++;
-					}
-					if(i+1<n && j+1<m){
-						t2[i+1][j+1]++;
+		
+		for(int i=0;i<m;i++){
+			cin>>data;
+			for(int j=0;j<n;j++){
+				if(data[j]=='*'){
+					map[i][j]=-1;
+					for(int t=0;t<8;t++){
+						if(map[i+count[t].first][j+count[t].second]!=-1 && i+count[t].first>=0 && i+count[t].first<m && j+count[t].second>=0 && j+count[t].second<n){
+							map[i+count[t].first][j+count[t].second]++;
+						}
 					}
 				}
 			}
 		}
-		count++;
-		cout<<"Field #"<<count<<":"<<endl;
-		for(int i=0;i<n;i++){
-			for(int j=0;j<m;j++){
-				if(t1[i][j]=='*'){
+		
+		for(int i=0;i<m;i++){
+			for(int j=0;j<n;j++){
+				if(map[i][j]==-1){
 					cout<<"*";
 				}
 				else{
-					cout<<t2[i][j];
+					cout<<map[i][j];
 				}
 			}
 			cout<<endl;
 		}
 	}
+	
 	return 0;
 }
