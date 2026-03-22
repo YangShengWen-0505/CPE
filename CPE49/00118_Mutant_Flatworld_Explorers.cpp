@@ -1,87 +1,75 @@
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 #include <map>
 
 using namespace std;
 
-bool move(int x,int y,pair<int,int> p,int l,int w){
-	if(x+p.first<0 ||x+p.first>l || y+p.second<0 || y+p.second>w){
-		return false;
-	}
-	else{
-		return true;
-	}
-}
-
 int main(){
-	long long int l,w,x,y,now;
-	vector<vector<int>> data;
-	vector<pair<int,int>> p;
-	string temp,line;
-	map<string,int> pos;
+	
+	int m,n,x,y,now;
+	string temp;
 	bool check;
-
-	pos["N"]=0;
-	pos["E"]=1;
-	pos["S"]=2;
-	pos["W"]=3;
+	map<char,int> face{
+		{'N',0},
+		{'E',1},
+		{'S',2},
+		{'W',3}
+	};
+	map<pair<int,int>,bool> noway;
+	vector<pair<int,int>> data{
+		{0,1},
+		{1,0},
+		{0,-1},
+		{-1,0}
+	};
 	
-	p.push_back({0,1});
-	p.push_back({1,0});
-	p.push_back({0,-1});
-	p.push_back({-1,0});
-	
-	cin>>l>>w;
-	
-	data.resize(l+1);
-	for(int i=0;i<data.size();i++){
-		for(int j=0;j<w+1;j++){
-			data[i].push_back(0);
-		}
-	}
-	
-	while(cin>>x>>y>>temp){
+	cin>>n>>m;
+	while(cin>>x>>y){
 		cin.ignore();
-		getline(cin,line);
-		now=pos[temp];
-		for(int t=0;t<line.size();t++){
-			check=false;
-			switch(line[t]){
+		getline(cin,temp);
+		now=face[temp[0]];
+		getline(cin,temp);
+		
+		for(int i=0;i<temp.size();i++){
+			check=true;
+			switch(temp[i]){
+				case 'F':
+					if(x+data[now].first>=0 && x+data[now].first<=n && y+data[now].second>=0 && y+data[now].second<=m){
+						x+=data[now].first;
+						y+=data[now].second;
+					}
+					else{
+						if(noway[{x,y}]!=true){
+							check=false;
+							noway[{x,y}]=true;
+						}
+					}
+					break;
 				case 'L':
 					now=(now-1+4)%4;
 					break;
 				case 'R':
 					now=(now+1+4)%4;
 					break;
-				case 'F':
-					if(move(x,y,p[now],l,w)){
-						x+=p[now].first;
-						y+=p[now].second;
-					}
-					else{
-						if(data[abs(l-x)][y]!=1){
-							data[abs(l-x)][y]=1;
-							check=true;
-						}
-					}
-					break;
 			}
-			if(check==true)
-					break;
+			if(!check){
+				break;
+			}
 		}
-		if(check==true){
-			cout<<x<<" "<<y<<" "<<temp<<" LOST"<<endl;
+		for(auto it=face.begin();it!=face.end();it++){
+			if(it->second==now){
+				temp=it->first;
+				break;
+			}
+		}
+		if(!check){
+				cout<<x<<" "<<y<<" "<<temp<<" LOST"<<endl;
 		}
 		else{
-			for(auto it=pos.begin();it!=pos.end();it++){
-				if((*it).second==now){
-					temp=(*it).first;
-					break;
-				}
-			}
 			cout<<x<<" "<<y<<" "<<temp<<endl;
 		}
 	}
-	return 0;	
+	
+	return 0;
 }

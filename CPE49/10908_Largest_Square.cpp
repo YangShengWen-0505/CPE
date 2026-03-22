@@ -1,109 +1,69 @@
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
 int main(){
 
-	long long int t,m,n,q,x,y,up,down,left,right,move,small;
-	vector<vector<char>> map;
-	char temp,target;
+	int t,m,n,q,x,y,size;
+	string temp;
+	vector<string> data;
 	bool check;
 	
 	cin>>t;
-	while(t>0){
+	
+	for(int T=0;T<t;T++){
+		data.clear();
 		cin>>m>>n>>q;
-		map.resize(m);
-		for(int i=0;i<m;i++){
-			map[i].resize(n);
-		}
-		for(int i=0;i<m;i++){
-			for(int j=0;j<n;j++){
-				cin>>map[i][j];
-			}
-		}
+		cin.ignore();
 		cout<<m<<" "<<n<<" "<<q<<endl;
-		while(q>0){
-			small=0;
-			cin>>x>>y;
-			target=map[x][y];
-			move=y;
-			temp=map[x][move];
-			right=-1;
-			while(temp==target && move<n){
-				move++;
-				right++;
-				if( move>=n)
-					break;
-				temp=map[x][move];
-			}
-			small=right;
-			
-			move=y;
-			temp=map[x][move];
-			left=-1;
-			while(temp==target && move>=0){
-				move--;
-				left++;
-				if( move<0)
-					break;
-				temp=map[x][move];
-			}
-			if(small>left)
-				small=left;
-				
-			move=x;
-			temp=map[move][y];
-			down=-1;
-			while(temp==target && move<m){
-				move++;
-				down++;
-				if( move>=m)
-					break;
-				temp=map[move][y];
-			}
-			if(small>down)
-				small=down;
-			
-			move=x;
-			temp=map[move][y];
-			up=-1;
-			while(temp==target && move>=0){
-				move--;
-				up++;
-				if( move<0)
-					break;
-				temp=map[move][y];
-			}
-			if(small>up)
-				small=up;
-			check=false;
-			while(check==false){
-				for(int i=0;i<small*2+1;i++){
-					for(int j=0;j<small*2+1;j++){
-						if(map[x-small+i][y-small+j]==target){
-							check=true;
-						}
-						else{
-							check=false;
-							break;
-						}
-					}
-					if(check==false)
+		for(int i=0;i<m;i++){
+				getline(cin,temp);
+				data.push_back(temp);
+		}
+		for(int Q=0;Q<q;Q++){
+			cin>>y>>x;
+			size=1;
+			while(true){
+				check=true;
+				if(y-size<0 || y+size>=m || x-size<0 || x+size>=n){
 						break;
 				}
-				if(check==false){
-					small-=1;
+				for(int i=0;i<size*2 && check;i++){
+					if(data[y-size][x-size+i]!=data[y][x]){
+						check=false;
+						break;
+					}
 				}
-				if(small==0)
+				for(int i=0;i<size*2 && check;i++){
+					if(data[y-size+i][x+size]!=data[y][x]){
+						check=false;
+						break;
+					}
+				}
+				for(int i=0;i<size*2 && check;i++){
+					if(data[y+size][x-size+1+i]!=data[y][x]){
+						check=false;
+						break;
+					}
+				}
+				for(int i=0;i<size*2 && check;i++){
+					if(data[y-size+1+i][x-size]!=data[y][x]){
+						check=false;
+						break;
+					}
+				}
+				if(!check){
 					break;
+				}
+				else{
+					size+=1;
+				}
 			}
-			cout<<small*2+1<<endl;
-			
-			q--;
+			cout<<(size-1)*2+1<<endl;
 		}
-		t--;
-		
 	}
+
 	return 0;
 }
