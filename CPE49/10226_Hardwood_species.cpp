@@ -1,58 +1,37 @@
 #include <iostream>
 #include <string>
-#include <vector>
-#include <algorithm>
+#include <map>
 
 using namespace std;
 
 int main(){
-
-	int n,count=0;
-	vector<pair<string,int>> data;
-	vector<string> name;
-	string word;
 	
-	if(!(cin>>n))
-		return 0;
-	getline(cin,word);
-	getline(cin,word);
+	string data;
+	int n,count;
+	map<string,int> result;
 	
-	while(true){
-		bool has_next=(bool)getline(cin, word);
-		if(!has_next || word==""){
-			if(count > 0){
-				sort(name.begin(),name.end());
-				
-				data.push_back({name[0],0});
-				
-				for(int i=0;i<name.size();i++){
-					if(name[i]==data[data.size()-1].first){
-						data[data.size()-1].second++;
-					}
-					else{
-						cout<<data[data.size()-1].first;
-						printf(" %0.4f\n",(double)data[data.size()-1].second/count*100);
-						data.push_back({name[i],1});
-					}
-				}
-				cout<<data[data.size()-1].first;
-				printf(" %0.4f\n",(double)data[data.size()-1].second/count*100);
-			}
-			n--;
-			if(n==0){
+	cin>>n;
+	cin.ignore();
+	getline(cin,data);
+	
+	for(int t=0;t<n;t++){
+		result.clear();
+		count=0;
+		while(getline(cin,data)){
+			if(data.empty()){
 				break;
 			}
-			else{
-				cout<<endl;
-				count=0;
-				data.clear();
-				name.clear();
-				continue;
-			}
+			count++;
+			result[data]++;
 		}
-		name.push_back(word);
-		count++;
+		for(auto it=result.begin();it!=result.end();it++){
+			cout<<it->first<<" ";
+			printf("%0.4f\n",((double)it->second/count)*100);
+		}
+		if(t!=n-1){
+			cout<<endl;
+		}
 	}
-
+	
 	return 0;
 }

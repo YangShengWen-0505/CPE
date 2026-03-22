@@ -1,37 +1,31 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include <cmath>
 
 using namespace std;
 
 int main(){
 
-	long long int x,temp,ans,n;
-	string a;
-	stringstream ss;
-	vector<int> b;
+	long long int x,temp,sum,size,digit;
+	vector<int> data;
+	string line;
 	
 	while(cin>>x){
 		cin.ignore();
-		getline(cin,a);
-		
-		ans=0;
-		stringstream ss(a);
-		
-		b.clear();
+		sum=0;
+		data.clear();
+		getline(cin,line);
+		stringstream ss(line);
 		while(ss>>temp){
-			b.push_back(temp);
+			data.push_back(temp);
 		}
-		
-		n=b.size();
-		
-		for(int i=0;i<n-1;i++){
-			ans+=b[i]*(n-1-i)*pow(x,n-2-i);
+		size=data.size();
+		digit=1;
+		for(int i=size-2;i>=0;i--){
+			sum+=data[i]*(size-1-i)*digit;
+			digit*=x;
 		}
-		
-		cout<<ans<<endl;
-		
+		cout<<sum<<endl;
 	}
 
 	return 0;
