@@ -3,56 +3,53 @@
 
 using namespace std;
 
-void change(int i,int quiz,vector<int>& data){
-	while(quiz>0){
-		data.push_back(quiz%i);
-		quiz/=i;
-	}
-}
-
 int main(){
 
-	int t,n,quiz,small,sum,price[37];
-	vector<int> data,output;
+	long long int price[36],T,N,temp,sum,small,Temp;
+	vector<int> result;
 	
-	cin>>t;
-	for(int T=0;T<t;T++){
-		if(T!=0){
+	cin>>T;
+	for(int t=0;t<T;t++){
+		if(t!=0){
 			cout<<endl;
 		}
-		cout<<"Case "<<T+1<<":"<<endl;
 		for(int i=0;i<36;i++){
 			cin>>price[i];
 		}
-		cin>>n;
-		while(n>0){
-			small=999999999;
-			cin>>quiz;
+		
+		cout<<"Case "<<t+1<<":"<<endl;
+		cin>>N;
+		
+		for(int n=0;n<N;n++){
+			cin>>temp;
+			cout<<"Cheapest base(s) for number "<<temp<<": ";
+			small=99999;
 			for(int i=2;i<=36;i++){
 				sum=0;
-				data.clear();
-				change(i,quiz,data);
-				for(int j=0;j<data.size();j++){
-					sum+=price[data[j]];
+				Temp=temp;
+				while(Temp>0){
+					sum+=price[Temp%i];
+					Temp/=i;
 				}
-				if(small>sum){
-					output.clear();
-					small=sum;
-					output.push_back(i);
-				}
-				else if(small==sum){
-					output.push_back(i);
+				if(sum<=small){
+					if(sum!=small){
+						small=sum;
+						result.clear();
+						result.push_back(i);
+					}
+					else{
+						result.push_back(i);
+					}
 				}
 			}
-			cout<<"Cheapest base(s) for number "<<quiz<<":";
-			for(int i=0;i<output.size();i++){
-				cout<<" ";
-				cout<<output[i];
+			for(int i=0;i<result.size();i++){
+				if(i!=0)
+					cout<<" ";
+				cout<<result[i];
 			}
 			cout<<endl;
-			n--;
 		}
 	}
-
+	
 	return 0;
 }
