@@ -10,7 +10,8 @@ int main(){
 	
 	while(cin>>a){
 		sum=0;
-		max=0;
+		max=1; 
+		
 		for(int i=0;i<a.size();i++){
 			if('0'<=a[i] && a[i]<='9'){
 				sum+=a[i]-'0';
@@ -31,24 +32,19 @@ int main(){
 				}
 			}
 		}
-		if(a.size()==1 && a[0]=='0'){
-			cout<<2<<endl;
+		
+		bool found = false;
+		
+		for(int i=max; i<=61; i++){
+			if(sum % i == 0){
+				cout << i + 1 << endl;
+				found = true;
+				break;
+			}
 		}
-		else if(a.size()==1 || (a.size()==2 && !('0'<=a[0] && a[0]<='9') && !('A'<=a[0] && a[0]<='Z') && !('a'<=a[0] && a[0]<='z'))){
-			cout<<sum+1<<endl;
-		}
-		else{	
-			for(int i=2;i<=62;i++){
-				if(i>=max && sum%i==0){
-					sum=i;
-				}
-			}
-			if(sum<=62){
-				cout<<sum+1<<endl;
-			}
-			else{
-				cout<<"such number is impossible!"<<endl;
-			}
+		
+		if(!found){
+			cout<<"such number is impossible!"<<endl;
 		}
 	}
 	
