@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
 	
-	int n,N,count,max=0,i,flag;
+	long long int n,N,count,max=0,i,flag;
 	while(cin>>N>>n){
 		flag=0;
 		max=0;

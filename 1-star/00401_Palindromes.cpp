@@ -49,11 +49,10 @@ int main(){
 		right = line.size() - 1;
 		mirrored = true;
 		while(left <= right){
-			if(data.find(line[left]) != data.end()){
-				if(data[line[left]] != line[right]){
-					mirrored = false;
-					break;	
-				}
+			auto mirror = data.find(line[left]);
+			if(mirror == data.end() || mirror->second != line[right]){
+				mirrored = false;
+				break;	
 			}
 			left++;
 			right--;

@@ -1,0 +1,15 @@
+# Build artifacts and generated binaries
+*.exe
+*.out
+*.o
+*.obj
+*.dll
+*.pdb
+*.ilk
+*.class
+bin/
+obj/
+build/
+
+# Writing drafts are kept out of the repository
+00-Writing/
